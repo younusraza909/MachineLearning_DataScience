@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 25 14:05:59 2020
+
+@author: Raza
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+data=pd.read_csv("Salary_DataSet.csv")
+
+#Spliting Data Into X And Y
+
+X=data.iloc[:,:-1].values
+Y=data.iloc[:,1].values
+
+#Spliting data into training and testing
+from sklearn.model_selection import train_test_split
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.3,random_state=0) 
+
+#REGRESSION
+from sklearn.linear_model import LinearRegression
+reg=LinearRegression()
+reg.fit(X_train,Y_train)
+
+y_predict=reg.predict(X_test)
+
+#Plotting the graph Train Data
+plt.scatter(X_train,Y_train,color="red")
+plt.plot(X_train,reg.predict(X_train),color="blue")
+plt.title("Salary Vs Experience")
+plt.xlabel("Experience")
+plt.ylabel("Salary")
+plt.show()
+
+
+#Plotting the graph Test Data
+plt.scatter(X_test,Y_test,color="red")
+plt.plot(X_test,reg.predict(X_test),color="blue")
+plt.title("Salary Vs Experience")
+plt.xlabel("Experience")
+plt.ylabel("Salary")
+plt.show()
+
+####Working For Error
+from sklearn.metrics import mean_absolute_error
+MAE=mean_absolute_error(Y_test,y_predict) 
+print(MAE)
+
+from sklearn.metrics import mean_squared_error
+MSE=mean_squared_error(Y_test,y_predict) 
+print(MSE)
+
+from math import sqrt
+from sklearn.metrics import mean_squared_error
+RMSE=sqrt(mean_squared_error(Y_test,y_predict)) 
+print(RMSE)
+
+
+from sklearn.metrics import mean_squared_log_error
+RMSLE=sqrt(mean_squared_log_error(Y_test,y_predict)) 
+print(RMSLE)
