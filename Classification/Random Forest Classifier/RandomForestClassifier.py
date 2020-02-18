@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 #Import the data set from Desktop
-dataset = pd.read_csv('RFC.csv')
+dataset = pd.read_csv('DTC.csv')
 X=dataset.iloc[:,[0,1]].values
 y=dataset.iloc[:,2].values
 
@@ -22,8 +22,8 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-from sklearn.ensemble import RandomForestClassifier
-classifer = RandomForestClassifier(n_estimators=10,criterion="entropy",random_state=0)
+from sklearn.tree import DecisionTreeClassifier
+classifer = DecisionTreeClassifier(criterion="entropy",random_state=0)
 classifer.fit(X_train,y_train)
 
 y_pred= classifer.predict(X_test)
